@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns="http://java.sun.com/xml/ns/javaee" 
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+		version="3.0">
+  <display-name>SummaryTask4_2</display-name>
+  <servlet>
+    <servlet-name>controller</servlet-name>
+    <servlet-class>control.Controller</servlet-class>
+  </servlet>
+  <filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>web.filter.EncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <servlet-name>Controller</servlet-name>
+  </filter-mapping>
+  <filter>
+    <filter-name>SecurityFilter</filter-name>
+    <filter-class>web.filter.SecurityFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <servlet-name>Controller</servlet-name>
+  </filter-mapping>
+  <resource-ref>
+    <description>MySQL Connection Pool</description>
+    <res-ref-name>jdbc/committee</res-ref-name>
+    <res-type>java.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/jsp/errors/404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/WEB-INF/jsp/errors/403.jsp</location>
+  </error-page>
+  
+  <display-name>ServletFileUploadDownloadExample</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>tempfile.dir</param-name>
+    <param-value>tmpfiles</param-value>
+  </context-param>
+  
+</web-app>

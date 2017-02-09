@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Context>
+  <Resource name="jdbc/committee"
+  			auth="Container" 
+  			type="javax.sql.DataSource"
+			maxActive="100" maxIdle="30" maxWait="10000"
+			username="root" password="root" 
+			driverClassName="com.mysql.jdbc.Driver"
+			defaultAutoCommit="false"
+			defaultTransactionIsolation="READ_COMMITTED"
+			url="jdbc:mysql://localhost:3306/committee?useUnicode=true&amp;characterEncoding=utf-8"/>		
+</Context>

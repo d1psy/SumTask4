@@ -1,0 +1,340 @@
+CREATE DATABASE `committee`;
+
+
+
+USE `committee`;
+
+CREATE TABLE IF NOT EXISTS `user` (
+  
+`user_id` int(11) NOT NULL AUTO_INCREMENT,
+  
+`login` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  
+`password` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  
+`name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  
+`surname` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  
+`patronymic` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  
+`email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  
+`region` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  
+`city` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  
+`school` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+`role` varchar(10) DEFAULT "user",
+  
+PRIMARY KEY(`user_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `subjects` (
+  
+
+`id_subj` INT NOT NULL auto_increment,
+   
+
+`subject_name` varchar(50) NOT NULL,
+
+  
+
+PRIMARY KEY(`id_subj`)
+ 
+
+
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE `user_photo` (
+  
+
+
+`photo` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+
+`us_id` INT NOT NULL,
+  
+
+
+CONSTRAINT `us_id`
+	
+
+
+FOREIGN KEY (`us_id`)
+	
+
+
+REFERENCES `user` (`user_id`)
+
+
+
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_marks` (
+
+`marks_id` INT NOT NULL AUTO_INCREMENT,
+
+`us_id` INT NOT NULL,
+
+`subject1_id` INT NOT NULL,
+
+`subject1` INT NOT NULL,
+
+`subject2_id` INT NOT NULL,
+
+`subject2` INT NOT NULL,
+
+`subject3_id` INT NOT NULL,
+
+`subject3` INT NOT NULL,
+
+`certmark` INT NOT NULL,
+
+
+PRIMARY KEY(`marks_id`),
+
+
+CONSTRAINT `us2_id`
+
+FOREIGN KEY (`us_id`)
+
+REFERENCES `user` (`user_id`),
+
+
+CONSTRAINT `marks_sub1`
+
+FOREIGN KEY (`subject1_id`)
+
+REFERENCES `subjects` (`id_subj`),
+
+
+CONSTRAINT `marks_sub2`
+
+FOREIGN KEY (`subject2_id`)
+
+REFERENCES `subjects` (`id_subj`),
+
+
+CONSTRAINT `marks_sub3`
+
+FOREIGN KEY (`subject3_id`)
+
+REFERENCES `subjects` (`id_subj`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+
+
+CREATE TABLE `user_certmark` (
+
+`us_id` INT NOT NULL,
+
+`certmark` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+
+
+CONSTRAINT `us1_id`
+
+FOREIGN KEY (`us_id`)
+
+REFERENCES `user` (`user_id`)
+
+
+
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS `faculty` (
+  
+`id_faculty` int(11) NOT NULL AUTO_INCREMENT,
+  
+
+`name` varchar(50) NOT NULL,
+  
+
+`maxplace` int(11) NOT NULL,
+  
+
+`budget` int(11) NOT NULL,
+  
+
+`subject1`int(11) NOT NULL,
+  
+
+`subject2`int(11) NOT NULL,
+  
+
+`subject3` int(11) NOT NULL,
+
+
+`reg_count` int(11) NOT NULL,                       
+PRIMARY KEY(`id_faculty`),
+
+
+CONSTRAINT `fac_sub1`
+	
+
+FOREIGN KEY (`subject1`)
+	
+
+REFERENCES `subjects` (`id_subj`),
+
+
+CONSTRAINT `fac_sub2`
+	
+
+FOREIGN KEY (`subject2`)
+	
+
+REFERENCES `subjects` (`id_subj`),
+
+
+CONSTRAINT `fac_sub3`
+	
+
+FOREIGN KEY (`subject3`)
+	
+
+REFERENCES `subjects` (`id_subj`)
+
+
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `faculty_register` (
+  
+
+
+`id_reg` INT NOT NULL AUTO_INCREMENT,
+  
+
+
+`user_id` INT NOT NULL,
+  
+
+
+`fac_id` INT NOT NULL,
+  
+
+
+`marks_id` INT NOT NULL,
+
+
+PRIMARY KEY(`id_reg`),
+  
+
+
+CONSTRAINT `reg_user_id`
+	
+
+
+FOREIGN KEY (`user_id`)
+	
+
+
+REFERENCES `user` (`user_id`),
+  
+
+
+CONSTRAINT `fac_reg_id`
+	
+
+
+FOREIGN KEY (`fac_id`)
+	
+
+
+REFERENCES `faculty` (`id_faculty`) ON UPDATE CASCADE ON DELETE CASCADE,
+
+
+
+CONSTRAINT `marks_id`
+
+
+FOREIGN KEY (`marks_id`)
+
+
+REFERENCES `user_marks` 
+(`marks_id`)
+
+
+
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `statement`(
+
+
+
+`statement_id` int(11) NOT NULL AUTO_INCREMENT,
+  
+
+`user_id` int(11) not null,
+
+  
+`faculty_id` int(11) not null,
+
+  
+PRIMARY KEY(`statement_id`),
+
+
+CONSTRAINT `user_id`
+
+
+FOREIGN KEY (`user_id`)
+
+ 
+REFERENCES `user` (`user_id`),
+
+
+CONSTRAINT `faculty_id`
+
+
+FOREIGN KEY (`faculty_id`)
+
+
+REFERENCES `faculty` (`id_faculty`)ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+
+
+
+INSERT INTO `user` (`login`, `password`, `name`, `surname`, `patronymic`, `email`, `region`, `city`, `school`, `role`) 
+
+VALUES ("admin", "admin", "Данила", "Голубцов", "Васильевич", "heavysandvichguy1@gmail.com", "Харьковская область", "Харьков", "Лицей", "admin");
+
+INSERT INTO `subjects` (`subject_name`) VALUES ("Математика");
+
+
+INSERT INTO `subjects` (`subject_name`) VALUES ("Украинский");
+
+
+INSERT INTO `subjects` (`subject_name`) VALUES ("Английский");
+
+
+INSERT INTO `subjects` (`subject_name`) VALUES ("Физика");
+
+
+INSERT INTO `subjects` (`subject_name`) VALUES ("История");
+INSERT INTO `faculty` (`name`, `maxplace`, `budget`, `subject1`, `subject2`, `subject3`, `reg_count`) 
+
+VALUES ("Механико-математический", 60, 40, 5, 6, 7, 0);
+
+INSERT INTO `faculty` (`name`, `maxplace`, `budget`, `subject1`, `subject2`, `subject3`, `reg_count`) 
+
+VALUES ("Иностранных языков", "100", "30", 9, 6, 7, 0);
+
+
